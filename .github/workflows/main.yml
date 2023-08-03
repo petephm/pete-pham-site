@@ -1,0 +1,36 @@
+name: Main branch workflow
+
+on:
+  push:
+    branches:
+      - 'main'
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  validation:
+    name: Run validation & release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.name "GitHub Action" |
+          git config --global user.email "github-action@users.noreply.github.com" |
+          git stash |
+          npm run release:ci
