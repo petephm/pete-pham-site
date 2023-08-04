@@ -1,6 +1,11 @@
 module.exports = {
-  extends: ['plugin:astro/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:astro/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+  ],
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     sourceType: 'module',
     ecmaVersion: 2020,
   },
@@ -8,7 +13,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  plugins: ['import'],
+  plugins: ['@typescript-eslint', 'import'],
   rules: {
     'import/order': [
       'error',
