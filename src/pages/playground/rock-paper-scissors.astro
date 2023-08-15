@@ -1,0 +1,19 @@
+---
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout title="Rock Paper Scissors">
+  <div class="text-white relative">
+    <h1>Rock Paper Scissors</h1>
+
+    <canvas id="webgl" class="fixed inset-0 -z-1"></canvas>
+  </div>
+</Layout>
+
+<script>
+  import { init } from '@/modules/RockPaperScissors'
+
+  const canvas = document.getElementById('webgl') as HTMLCanvasElement
+
+  init(canvas)
+</script>
